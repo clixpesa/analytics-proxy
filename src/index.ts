@@ -46,7 +46,7 @@ async function forwardToAmplitude(request: Request, env: Env): Promise<Response>
     return new Response('Forbidden', { status: 403 })
   }
 
-  const body = await request.json()
+  const body = await request.json() as Record<string, unknown>
 
   const payload = {
     ...body,

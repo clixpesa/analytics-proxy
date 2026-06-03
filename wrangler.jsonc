@@ -17,7 +17,17 @@
 	 "vars": {
     "ALLOWED_ORIGIN": "https://clixpesa.com",
     "ALLOWED_ORIGINS": "mobile,web"
-  }
+  },
+
+	 "env": {
+    "test": {
+      "vars": {
+        "ALLOWED_ORIGIN": "https://clixpesa.com",
+        "ALLOWED_ORIGINS": "mobile,web",
+        "AMPLITUDE_API_KEY": "00000000000000000000000000000000" // Dummy API Key for testing 
+      }
+    }
+	}
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
