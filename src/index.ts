@@ -29,7 +29,8 @@ export default {
 
 		const url = new URL(request.url);
 
-		if (url.pathname === '/v1/amplitude-proxy') {return forwardToAmplitude(request, env);
+		if (url.pathname === '/v1/amplitude-proxy') {
+			return forwardToAmplitude(request, env);
 		}
 
 		return new Response('Not found', { status: 404 });
