@@ -14,14 +14,14 @@
 	"compatibility_flags": ["nodejs_compat"],
 	"vars": {
 		"ALLOWED_ORIGIN": "https://clixpesa.com",
-		"ALLOWED_ORIGINS": "mobile,web",
+		"ALLOWED_ORIGINS": "mobile-analytics-pasha"
 	},
 
 	"env": {
 		"test": {
 			"vars": {
 				"ALLOWED_ORIGIN": "https://clixpesa.com",
-				"ALLOWED_ORIGINS": "mobile,web",
+				"ALLOWED_ORIGINS": "mobile-analytics-pasha",
 				"AMPLITUDE_API_KEY": "00000000000000000000000000000000", // Dummy API Key for testing
 			},
 		},
