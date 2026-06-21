@@ -62,21 +62,17 @@ async function forwardToAmplitude(request: Request, env: Env): Promise<Response>
 
 	const responseBody = (await response.json()) as Record<string, unknown>;
 
-	const events = Array.isArray(body.events) ? body.events : [];
-	console.log(
-		JSON.stringify({
-			upstreamStatus: response.status,
-			amplitudeCode: responseBody.code,
-			eventsIngested: responseBody.events_ingested,
-			eventTypes: events.map((event) => event.event_type),
-			identities: events.map((event) => ({
-				hasUserId: Boolean(event.user_id),
-				hasDeviceId: Boolean(event.device_id),
-				userIdLength: typeof event.user_id === 'string' ? event.user_id.length : 0,
-				deviceIdLength: typeof event.device_id === 'string' ? event.device_id.length : 0,
-			})),
-		}),
-	);
+	if (!response.ok) {
+		console.warn(
+			JSON.stringify({
+				reason: 'amplitude_rejected',
+				upstreamStatus: response.status,
+				amplitudeCode: responseBody.code,
+				error: responseBody.error,
+				missingField: responseBody.missing_field,
+			}),
+		);
+	}
 
 	// Cloudflare provides CF-IPCountry — forward as Origin-Country
 	// ApplicationTransport reads this to call reportOriginCountry()
