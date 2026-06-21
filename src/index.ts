@@ -43,6 +43,7 @@ async function forwardToAmplitude(request: Request, env: Env): Promise<Response>
 	const allowedOrigins = env.ALLOWED_ORIGINS.split(',').map((o) => o.trim());
 
 	if (!appOrigin || !allowedOrigins.includes(appOrigin)) {
+		console.warn(JSON.stringify({ reason: 'forbidden_origin', appOrigin, allowedOrigins }));
 		return new Response('Forbidden', { status: 403 });
 	}
 
@@ -59,7 +60,18 @@ async function forwardToAmplitude(request: Request, env: Env): Promise<Response>
 		body: JSON.stringify(payload),
 	});
 
-	const responseBody = await response.json();
+	const responseBody = (await response.json()) as Record<string, unknown>;
+
+	console.log(
+		JSON.stringify({
+			upstreamStatus: response.status,
+			amplitudeCode: responseBody.code,
+			eventsIngested: responseBody.events_ingested,
+			error: responseBody.error,
+			missingField: responseBody.missing_field,
+			invalidIds: responseBody.events_with_invalid_id_lengths,
+		}),
+	);
 
 	// Cloudflare provides CF-IPCountry — forward as Origin-Country
 	// ApplicationTransport reads this to call reportOriginCountry()

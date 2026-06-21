@@ -5,6 +5,7 @@
 	"scripts": {
 		"deploy": "wrangler deploy --env=\"\"",
 		"dev": "wrangler dev",
+		"tail": "wrangler tail",
 		"start": "wrangler dev",
 		"test": "vitest",
 		"cf-typegen": "wrangler types",

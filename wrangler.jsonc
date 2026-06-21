@@ -14,7 +14,7 @@
 	"compatibility_flags": ["nodejs_compat"],
 	"vars": {
 		"ALLOWED_ORIGIN": "https://clixpesa.com",
-		"ALLOWED_ORIGINS": "mobile-analytics-pasha"
+		"ALLOWED_ORIGINS": "mobile-analytics-pasha",
 	},
 
 	"env": {
