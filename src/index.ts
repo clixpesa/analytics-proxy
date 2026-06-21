@@ -62,14 +62,19 @@ async function forwardToAmplitude(request: Request, env: Env): Promise<Response>
 
 	const responseBody = (await response.json()) as Record<string, unknown>;
 
+	const events = Array.isArray(body.events) ? body.events : [];
 	console.log(
 		JSON.stringify({
 			upstreamStatus: response.status,
 			amplitudeCode: responseBody.code,
 			eventsIngested: responseBody.events_ingested,
-			error: responseBody.error,
-			missingField: responseBody.missing_field,
-			invalidIds: responseBody.events_with_invalid_id_lengths,
+			eventTypes: events.map((event) => event.event_type),
+			identities: events.map((event) => ({
+				hasUserId: Boolean(event.user_id),
+				hasDeviceId: Boolean(event.device_id),
+				userIdLength: typeof event.user_id === 'string' ? event.user_id.length : 0,
+				deviceIdLength: typeof event.device_id === 'string' ? event.device_id.length : 0,
+			})),
 		}),
 	);
 
